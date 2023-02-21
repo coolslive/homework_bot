@@ -132,7 +132,7 @@ def main():
     start_message = "Бот запущен"
     send_message(bot, start_message)
     logging.info(start_message)
-    prev_msg = ""
+    prev_message = ""
 
     while True:
         try:
@@ -143,22 +143,18 @@ def main():
                 message = parse_status(homeworks[0])
             else:
                 message = "Статус не изменился"
-            if message != prev_msg:
+            if message != prev_message:
                 send_message(bot, message)
-                prev_msg = message
+                prev_message = message
             else:
                 logging.info(message)
-
-        except NotForSend as error:
-            message = f"Сбой в работе программы: {error}"
-            logging.error(message, exc_info=True)
 
         except Exception as error:
             message = f"Сбой в работе программы: {error}"
             logging.error(message, exc_info=True)
-            if message != prev_msg:
+            if message != prev_message:
                 send_message(bot, message)
-                prev_msg = message
+                prev_message = message
 
         finally:
             time.sleep(RETRY_PERIOD)
